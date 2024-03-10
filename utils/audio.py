@@ -68,3 +68,16 @@ class Audio:
         json = request.json()
 
         return json['cdnurl']
+
+    def get_playlist_tracks(self, playlist_id):
+        url = f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
+        headers = {
+            'Authorization': f'Bearer {AccessToken().access_token}'
+        }
+        request = requests.get(url, headers=headers)
+        request.raise_for_status()
+        json = request.json()
+
+        tracks = json.get('items', [])
+
+        return tracks
